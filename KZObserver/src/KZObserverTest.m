@@ -65,6 +65,17 @@
     STAssertEqualObjects([destination dest1], @"src", @"");
 }
 
+- (void)testBindWithBlock {
+    [target setSrc1:@"before"];
+    [destination setDest1:@"dest"];
+    [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1" withBlock:^(id value) {
+        return [value uppercaseString];
+    }];
+    STAssertEqualObjects([destination dest1], @"BEFORE", @"");
+    [target setSrc1:@"after"];
+    STAssertEqualObjects([destination dest1], @"AFTER", @"");
+}
+
 - (void)testUnbind {
     [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
     [observer unbind];

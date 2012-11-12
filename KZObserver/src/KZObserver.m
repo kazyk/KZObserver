@@ -7,6 +7,7 @@
 
 static NSString *const kSourceKeyPathKey = @"Source";
 static NSString *const kDestinationKeyPathKey = @"Dest";
+static NSString *const kBlockKey = @"Block";
 
 
 @implementation KZObserver {
@@ -52,16 +53,36 @@ static NSString *const kDestinationKeyPathKey = @"Dest";
 
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath toKeyPath:(NSString *)destKeyPath
 {
+    [self bindValueFromKeyPath:srcKeyPath toKeyPath:destKeyPath withBlock:nil];
+}
+
+- (void)bindValueFromKeyPath:(NSString *)srcKeyPath toKeyPath:(NSString *)destKeyPath withBlock:(KZObserverTransformBlock)block
+{
     ++_context;
     NSAssert(_context > 0, @"");
     NSNumber *context = [NSNumber numberWithInteger:_context];
-    NSDictionary *infodic = [NSDictionary dictionaryWithObjectsAndKeys:
-            srcKeyPath, kSourceKeyPathKey,
-            destKeyPath, kDestinationKeyPathKey, nil];
-    [_bindings setObject:infodic forKey:context];
-    
+
+    NSDictionary *infoDict = nil;
+    if (block) {
+        infoDict = @{
+            kSourceKeyPathKey: srcKeyPath,
+            kDestinationKeyPathKey: destKeyPath,
+            kBlockKey: block
+        };
+    } else {
+        infoDict = @{
+            kSourceKeyPathKey: srcKeyPath,
+            kDestinationKeyPathKey: destKeyPath
+        };
+    }
+    [_bindings setObject:infoDict forKey:context];
+
     //set current value
-    [[self destination] setValue:[[self target] valueForKeyPath:srcKeyPath] forKeyPath:destKeyPath];
+    id currentValue = [[self target] valueForKeyPath:srcKeyPath];
+    if (block) {
+        currentValue = block(currentValue);
+    }
+    [[self destination] setValue:currentValue forKeyPath:destKeyPath];
 
     [_target addObserver:self
               forKeyPath:srcKeyPath
@@ -74,10 +95,15 @@ static NSString *const kDestinationKeyPathKey = @"Dest";
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    NSDictionary *infodic = [_bindings objectForKey:(__bridge id)context];
-    NSString *destKeyPath = [infodic objectForKey:kDestinationKeyPathKey];
+    NSDictionary *infoDict = [_bindings objectForKey:(__bridge id)context];
+    NSString *destKeyPath = [infoDict objectForKey:kDestinationKeyPathKey];
     if (destKeyPath) {
-        [_destination setValue:[object valueForKeyPath:keyPath]
+        id value = [object valueForKeyPath:keyPath];
+        KZObserverTransformBlock block = [infoDict objectForKey:kBlockKey];
+        if (block) {
+            value = block(value);
+        }
+        [_destination setValue:value
                     forKeyPath:destKeyPath];
     }
 }

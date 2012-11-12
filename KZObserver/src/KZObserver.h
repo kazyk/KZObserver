@@ -6,6 +6,9 @@
 #import <Foundation/Foundation.h>
 
 
+typedef id (^KZObserverTransformBlock)(id value);
+
+
 @interface KZObserver : NSObject
 
 @property(strong, nonatomic, readonly) id target;
@@ -13,7 +16,12 @@
 
 - (id)initWithTarget:(id)target destination:(id)destination;
 
-- (void)bindValueFromKeyPath:(NSString *)srcKeyPath toKeyPath:(NSString *)destKeyPath;
+- (void)bindValueFromKeyPath:(NSString *)srcKeyPath
+                   toKeyPath:(NSString *)destKeyPath;
+
+- (void)bindValueFromKeyPath:(NSString *)srcKeyPath
+                   toKeyPath:(NSString *)destKeyPath
+                   withBlock:(KZObserverTransformBlock)block;
 
 - (void)unbind;
 
