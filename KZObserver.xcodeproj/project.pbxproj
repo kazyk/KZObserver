@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6EF6C5D01650F5E50055260B /* KZObserverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6C5CF1650F5E50055260B /* KZObserverTest.m */; };
 		D1A3BAD95EE7E2E8F03C1D63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D62 /* UIKit.framework */; };
 		D1A3BAD95EE7E2E8F03C1D65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D64 /* Foundation.framework */; };
 		D1A3BAD95EE7E2E8F03C1D67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D66 /* CoreGraphics.framework */; };
@@ -21,7 +22,6 @@
 		D1A3BAD95EE7E2E8F03C1D8E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D8D /* InfoPlist.strings */; };
 		D1A3BAD95EE7E2E8F03C1D94 /* KZObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D93 /* KZObserver.m */; };
 		D1A3BAD95EE7E2E8F03C1D95 /* KZObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D93 /* KZObserver.m */; };
-		D1A3BAD95EE7E2E8F03C1D98 /* KZObserverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3BAD95EE7E2E8F03C1D97 /* KZObserverTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6EF6C5CE1650F5E50055260B /* KZObserverTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZObserverTest.h; sourceTree = "<group>"; };
+		6EF6C5CF1650F5E50055260B /* KZObserverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KZObserverTest.m; sourceTree = "<group>"; };
 		D1A3BAD95EE7E2E8F03C1D59 /* KZObserver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KZObserver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A3BAD95EE7E2E8F03C1D62 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D1A3BAD95EE7E2E8F03C1D64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -54,8 +56,6 @@
 		D1A3BAD95EE7E2E8F03C1D8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A3BAD95EE7E2E8F03C1D93 /* KZObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KZObserver.m; sourceTree = "<group>"; };
 		D1A3BAD95EE7E2E8F03C1D96 /* KZObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZObserver.h; sourceTree = "<group>"; };
-		D1A3BAD95EE7E2E8F03C1D97 /* KZObserverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KZObserverTest.m; sourceTree = "<group>"; };
-		D1A3BAD95EE7E2E8F03C1D99 /* KZObserverTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZObserverTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6EF6C5CD1650F5E50055260B /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				6EF6C5CE1650F5E50055260B /* KZObserverTest.h */,
+				6EF6C5CF1650F5E50055260B /* KZObserverTest.m */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
 		D1A3BAD95EE7E2E8F03C1D55 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +131,7 @@
 				D1A3BAD95EE7E2E8F03C1D71 /* KZAppDelegate.h */,
 				D1A3BAD95EE7E2E8F03C1D69 /* Supporting Files */,
 				D1A3BAD95EE7E2E8F03C1D92 /* src */,
+				6EF6C5CD1650F5E50055260B /* tests */,
 			);
 			path = KZObserver;
 			sourceTree = "<group>";
@@ -157,8 +167,6 @@
 		D1A3BAD95EE7E2E8F03C1D92 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				D1A3BAD95EE7E2E8F03C1D99 /* KZObserverTest.h */,
-				D1A3BAD95EE7E2E8F03C1D97 /* KZObserverTest.m */,
 				D1A3BAD95EE7E2E8F03C1D96 /* KZObserver.h */,
 				D1A3BAD95EE7E2E8F03C1D93 /* KZObserver.m */,
 			);
@@ -280,7 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1A3BAD95EE7E2E8F03C1D95 /* KZObserver.m in Sources */,
-				D1A3BAD95EE7E2E8F03C1D98 /* KZObserverTest.m in Sources */,
+				6EF6C5D01650F5E50055260B /* KZObserverTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +450,7 @@
 				D1A3BAD95EE7E2E8F03C1D5D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D1A3BAD95EE7E2E8F03C1D7C /* Build configuration list for PBXNativeTarget "KZObserverTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +459,7 @@
 				D1A3BAD95EE7E2E8F03C1D7E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
