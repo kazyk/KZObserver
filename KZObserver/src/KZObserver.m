@@ -7,7 +7,6 @@
 
 static NSString *const kSourceKeyPathKey = @"Source";
 static NSString *const kDestinationKeyPathKey = @"Dest";
-static NSString *const kBlockKey = @"Block";
 
 
 @implementation KZObserver {
