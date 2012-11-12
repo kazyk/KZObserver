@@ -58,6 +58,13 @@
     STAssertEqualObjects([destination dest2], [NSNumber numberWithInt:4], @"");
 }
 
+- (void)testSetCurrentValue {
+    [target setSrc1:@"src"];
+    [destination setDest1:@"dest"];
+    [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
+    STAssertEqualObjects([destination dest1], @"src", @"");
+}
+
 - (void)testUnbind {
     [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
     [observer unbind];

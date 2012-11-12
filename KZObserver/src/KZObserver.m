@@ -60,6 +60,9 @@ static NSString *const kBlockKey = @"Block";
             srcKeyPath, kSourceKeyPathKey,
             destKeyPath, kDestinationKeyPathKey, nil];
     [_bindings setObject:infodic forKey:context];
+    
+    //set current value
+    [[self destination] setValue:[[self target] valueForKeyPath:srcKeyPath] forKeyPath:destKeyPath];
 
     [_target addObserver:self
               forKeyPath:srcKeyPath
