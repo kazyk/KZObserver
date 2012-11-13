@@ -17,6 +17,7 @@ static NSString *const kBlockKey = @"Block";
 
 @synthesize target = _target;
 @synthesize destination = _destination;
+@synthesize performsOnMainThread = _performsOnMainThread;
 
 - (id)initWithTarget:(id)target destination:(id)destination
 {
@@ -27,6 +28,7 @@ static NSString *const kBlockKey = @"Block";
         _target = target;
         _destination = destination;
         _bindings = [[NSMutableDictionary alloc] init];
+        _performsOnMainThread = YES;
     }
     return self;
 }
@@ -103,8 +105,14 @@ static NSString *const kBlockKey = @"Block";
         if (block) {
             value = block(value);
         }
-        [_destination setValue:value
-                    forKeyPath:destKeyPath];
+        
+        if ([self performsOnMainThread] && ![NSThread isMainThread]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_destination setValue:value forKeyPath:destKeyPath];
+            });
+        } else {
+            [_destination setValue:value forKeyPath:destKeyPath];
+        }
     }
 }
 

@@ -76,6 +76,15 @@
     STAssertEqualObjects([destination dest1], @"AFTER", @"");
 }
 
+- (void)testFromBackgroundThread {
+    [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
+    [target performSelectorInBackground:@selector(setSrc1:) withObject:@"value"];
+    
+    STAssertFalse([[destination dest1] isEqual:@"value"], @"");
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    STAssertEqualObjects([destination dest1], @"value", @"");
+}
+
 - (void)testUnbind {
     [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
     [observer unbind];

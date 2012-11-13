@@ -14,6 +14,8 @@ typedef id (^KZObserverTransformBlock)(id value);
 @property(strong, nonatomic, readonly) id target;
 @property(weak, nonatomic, readonly) id destination;
 
+@property(assign, nonatomic) BOOL performsOnMainThread; //default: YES
+
 - (id)initWithTarget:(id)target destination:(id)destination;
 
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath
