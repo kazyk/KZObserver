@@ -53,6 +53,26 @@ static NSString *const kBlockKey = @"Block";
     [self unbind];
 }
 
+- (void)observeValueForKeyPath:(NSString *)srcKeyPath block:(KZObserverBlock)block
+{
+    NSParameterAssert([srcKeyPath length] > 0);
+    NSParameterAssert(block);
+
+    ++_context;
+    NSNumber *context = [NSNumber numberWithInteger:_context];
+
+    NSDictionary *infoDict = @{
+            kSourceKeyPathKey: srcKeyPath,
+            kBlockKey: block
+    };
+    [_bindings setObject:infoDict forKey:context];
+
+    [_target addObserver:self
+              forKeyPath:srcKeyPath
+                 options:(NSKeyValueObservingOptions)0
+                 context:(__bridge void*)context];
+}
+
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath toKeyPath:(NSString *)destKeyPath
 {
     [self bindValueFromKeyPath:srcKeyPath toKeyPath:destKeyPath withBlock:nil];
@@ -60,8 +80,10 @@ static NSString *const kBlockKey = @"Block";
 
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath toKeyPath:(NSString *)destKeyPath withBlock:(KZObserverTransformBlock)block
 {
+    NSParameterAssert([srcKeyPath length] > 0);
+    NSParameterAssert([destKeyPath length] > 0);
+
     ++_context;
-    NSAssert(_context > 0, @"");
     NSNumber *context = [NSNumber numberWithInteger:_context];
 
     NSDictionary *infoDict = nil;
@@ -88,7 +110,7 @@ static NSString *const kBlockKey = @"Block";
 
     [_target addObserver:self
               forKeyPath:srcKeyPath
-                 options:NSKeyValueObservingOptionNew
+                 options:(NSKeyValueObservingOptions)0
                  context:(__bridge void*)context];
 }
 
@@ -112,6 +134,18 @@ static NSString *const kBlockKey = @"Block";
             });
         } else {
             [_destination setValue:value forKeyPath:destKeyPath];
+        }
+    } else {
+        id value = [object valueForKeyPath:keyPath];
+        KZObserverBlock block = [infoDict objectForKey:kBlockKey];
+        if (block) {
+            if ([self performsOnMainThread] && ![NSThread isMainThread]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    block(value);
+                });
+            } else{
+                block(value);
+            }
         }
     }
 }

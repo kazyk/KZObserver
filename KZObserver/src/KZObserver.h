@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
+typedef void (^KZObserverBlock)(id value);
 typedef id (^KZObserverTransformBlock)(id value);
 
 
@@ -17,6 +18,9 @@ typedef id (^KZObserverTransformBlock)(id value);
 @property(assign, nonatomic) BOOL performsOnMainThread; //default: YES
 
 - (id)initWithTarget:(id)target destination:(id)destination;
+
+- (void)observeValueForKeyPath:(NSString *)srcKeyPath
+                         block:(KZObserverBlock)block;
 
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath
                    toKeyPath:(NSString *)destKeyPath;

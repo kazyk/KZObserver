@@ -85,11 +85,27 @@
     STAssertEqualObjects([destination dest1], @"value", @"");
 }
 
+- (void)testObserveWithBlock {
+    __block id val = nil;
+    [observer observeValueForKeyPath:@"src1" block:^(id value) {
+        val = value;
+    }];
+
+    [target setSrc1:@"123"];
+    STAssertEqualObjects(val, @"123", @"");
+    [target setSrc1:@"456"];
+    STAssertEqualObjects(val, @"456", @"");
+}
+
 - (void)testUnbind {
     [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
+    [observer observeValueForKeyPath:@"src2" block:^(id value) {
+        STFail(@"");
+    }];
     [observer unbind];
 
     [target setSrc1:@"hoge"];
+    [target setSrc2:[NSNumber numberWithInteger:100]];
     STAssertNil([destination dest1], @"");
 }
 
