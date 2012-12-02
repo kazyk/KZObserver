@@ -53,7 +53,7 @@ static NSString *const kBlockKey = @"Block";
     [self unbind];
 }
 
-- (void)observeValueForKeyPath:(NSString *)srcKeyPath block:(KZObserverBlock)block
+- (void)observeValueForKeyPath:(NSString *)srcKeyPath options:(NSKeyValueObservingOptions)options block:(KZObserverBlock)block
 {
     NSParameterAssert([srcKeyPath length] > 0);
     NSParameterAssert(block);
@@ -69,7 +69,7 @@ static NSString *const kBlockKey = @"Block";
 
     [_target addObserver:self
               forKeyPath:srcKeyPath
-                 options:(NSKeyValueObservingOptions)0
+                 options:options
                  context:(__bridge void*)context];
 }
 
@@ -136,15 +136,14 @@ static NSString *const kBlockKey = @"Block";
             [_destination setValue:value forKeyPath:destKeyPath];
         }
     } else {
-        id value = [object valueForKeyPath:keyPath];
         KZObserverBlock block = [infoDict objectForKey:kBlockKey];
         if (block) {
             if ([self performsOnMainThread] && ![NSThread isMainThread]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    block(value);
+                    block(change);
                 });
             } else{
-                block(value);
+                block(change);
             }
         }
     }

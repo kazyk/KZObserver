@@ -87,8 +87,8 @@
 
 - (void)testObserveWithBlock {
     __block id val = nil;
-    [observer observeValueForKeyPath:@"src1" block:^(id value) {
-        val = value;
+    [observer observeValueForKeyPath:@"src1" options:0 block:^(NSDictionary *change) {
+        val = [target src1];
     }];
 
     [target setSrc1:@"123"];
@@ -99,7 +99,7 @@
 
 - (void)testUnbind {
     [observer bindValueFromKeyPath:@"src1" toKeyPath:@"dest1"];
-    [observer observeValueForKeyPath:@"src2" block:^(id value) {
+    [observer observeValueForKeyPath:@"src2" options:0 block:^(NSDictionary *change) {
         STFail(@"");
     }];
     [observer unbind];

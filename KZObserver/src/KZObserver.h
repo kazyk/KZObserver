@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-typedef void (^KZObserverBlock)(id value);
+typedef void (^KZObserverBlock)(NSDictionary *changeDict);
 typedef id (^KZObserverTransformBlock)(id value);
 
 
@@ -20,6 +20,7 @@ typedef id (^KZObserverTransformBlock)(id value);
 - (id)initWithTarget:(id)target destination:(id)destination;
 
 - (void)observeValueForKeyPath:(NSString *)srcKeyPath
+                       options:(NSKeyValueObservingOptions)options
                          block:(KZObserverBlock)block;
 
 - (void)bindValueFromKeyPath:(NSString *)srcKeyPath
