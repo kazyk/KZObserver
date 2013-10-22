@@ -21,3 +21,8 @@ id viewObject = [[SomeViewObject alloc] init];
 
 //KVO is removed when observer is deallocated
 ```
+
+license
+-----------
+
+MIT License
